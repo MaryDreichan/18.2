@@ -80,15 +80,15 @@ const heroesData = [{ //массив с данными о супергерое
   "url" : "https://n1s1.hsmedia.ru/e0/2b/55/e02b55b147eeaff9b3fe6bdbb36ff9ea/547x397_0xac120002_744074131540468872.jpg",
   "info": "Супергероиня российского происхождения, родилась предположительно в 1928 году в Сталинграде. "
 },{
-  name: 'Дэдпул',
-  universe: 'Marvel Comics',
-  alterego: 'Уэйд Уинстон Уилсон',
-  occupation: 'антигерой, наёмник',
-  friends: 'частично Мстители, Человек-паук, Росомаха',
-  superpowers:
+  "name": 'Дэдпул',
+  "universe": 'Marvel Comics',
+  "alterego": 'Уэйд Уинстон Уилсон',
+  "occupation": 'антигерой, наёмник',
+  "friends": 'частично Мстители, Человек-паук, Росомаха',
+  "superpowers":
     'высокий болевой порог, регенерация и бессмертие, сверхчеловеческая иммунная система',
-  url: 'https://n1s1.hsmedia.ru/34/93/39/3493392c94fc2ae0552ef9c7e87f2617/728x382_1_cc2a743fd686b7b2e256c062966bb465@1034x543_0xac120002_2692921231540468872.jpg',
-  info: 'Как и Росомаха из Людей Икс, Дэдпул был подвергнут опытам «Болтливым наёмником»',
+  "url": 'https://n1s1.hsmedia.ru/34/93/39/3493392c94fc2ae0552ef9c7e87f2617/728x382_1_cc2a743fd686b7b2e256c062966bb465@1034x543_0xac120002_2692921231540468872.jpg',
+  "info": 'Как и Росомаха из Людей Икс, Дэдпул был подвергнут опытам «Болтливым наёмником»',
 },
 ];
 
@@ -101,7 +101,7 @@ function fillHeroData(heroIndex, heroData) { //заполняю данные о 
   const heroFriendsElement = document.getElementById(`hero-friends-${heroIndex}`);
   const heroSuperpowersElement = document.getElementById(`hero-superpowers-${heroIndex}`);
 
-  heroNameElement.textContent = heroData.name; // с помощью textContent присваиваю содерджимое
+  heroNameElement.textContent = heroData.name; //с помощью textContent присваиваю содерджимое
   heroInfoElement.textContent = heroData.info;
   heroUniverseElement.textContent = `Вселенная: ${heroData.universe}`;
   heroAlteregoElement.textContent = `Альтер-эго: ${heroData.alterego}`;
@@ -114,37 +114,24 @@ for (let i = 0; i < heroesData.length; i++) { //увеличиваю индек�
 }
 
 // Функция для установки рейтинга
-function setRating(heroId, rating) {
-  const ratingElement = document.querySelector(`.rating[data-hero-id="${heroId}"]`);
-  const stars = ratingElement.querySelectorAll('.star');
-
-  for (let i = 0; i < stars.length; i++) {
-    stars[i].classList.toggle('active', i < rating);
-  }
-
+function setRating(heroId, rating) { //сохраняю рейтинг героя в localStorage
   localStorage.setItem(`rating_${heroId}`, rating);
 }
 
-function loadRating(heroId) {
-  const rating = localStorage.getItem(`rating_${heroId}`);
 
-  if (!isNaN(rating)) {
-    setRating(heroId, parseInt(rating));
-  }
+function handleRatingSubmit(event) { //обрабатываю и сохраняю рейтинг
+  const button = event.target;
+  const heroId = button.parentNode.getAttribute('data-hero-id');
+  const ratingInput = document.getElementById(`rating-input-${heroId}`);
+  const rating = parseInt(ratingInput.value);
+  setRating(heroId, rating);
 }
 
-function handleRatingClick(event) {
-const star = event.target;
-const rating = star.parentNode.querySelectorAll('.star').indexOf(star) + 1;
-const heroId = star.parentNode.getAttribute('data-hero-id');
-setRating(heroId, rating);
-}
-
-const ratingElements = document.querySelectorAll('.rating');
-ratingElements.forEach((ratingElement) => {
-ratingElement.addEventListener('click', handleRatingClick);
+const submitButtons = document.querySelectorAll('[id^="submit-rating-"]'); //выбираю все элементы, которые начинаются с "submit-rating-"
+submitButtons.forEach((button) => { //добавляю обработчик события клика
+  button.addEventListener('click', handleRatingSubmit);
 });
 
 for (let i = 1; i <= heroesData.length; i++) {
-loadRating(i);
+  loadRating(i);
 }
