@@ -1,0 +1,55 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallerySuper {
+  width: 40%; 
+  box-sizing: border-box; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.gallerySuper img {
+  width: 100%; 
+  height: auto; 
+}
+
+.description {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.rating {
+  display: inline-block;
+  font-size: 0; 
+}
+
+.star {
+  display: inline-block;
+  color: white;
+  font-size: 20px;
+  line-height: 1;
+  position: relative;
+}
+
+.star:before,
+.star:after {
+  content: '\2605';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.star:before {
+  color: black; 
+  -webkit-text-stroke: 1px black; 
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 0.5px; 
+}
+
+.star:after {
+  color: white; 
+}
